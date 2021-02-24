@@ -32,3 +32,6 @@ npm run serve
 ## 3 Step - Pub/Sub 패턴
 - Observer 패턴과 유사한 형태지만, 발행자와 구독자 사이에 Event bus가 존재하여 서로 인지하지 않아도 된다.
 - View와 Model의 결합도도 낮아진다.
+
+## 4 Step - Dispatcher 패턴 적용
+- View에서 발생하는 이벤트를 Dispatcher를 통해 다른 View 또는 Model로 전달하는 형태로 View와 Model이 서로 분리될 수 있도록 한다.

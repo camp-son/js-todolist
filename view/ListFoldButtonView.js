@@ -1,7 +1,8 @@
-import { EventType } from "../constant/EventType";
+import { EventType } from "../constant/EventType.js";
 
 export class ListFoldButtonView {
-    constructor(foldModel) {
+    constructor(dispatcher, foldModel) {
+        this.dispatcher = dispatcher;
         this.foldButton = document.querySelector('.fold');
 
         this.foldModel = foldModel;
@@ -11,14 +12,14 @@ export class ListFoldButtonView {
     }
 
     subscribe() {
-        this.foldModel.subscribe(EventType.CHANGE_FOLD, (isFold) => {
+        this.foldModel.subscribe(EventType.CLICK_TOGGLE_BUTTON, (isFold) => {
             this.render(isFold);
         });
     }
 
     initEvents() {
         this.foldButton.addEventListener('click', () => {
-            this.foldModel.toggleFold.call(this.foldModel);
+            this.dispatcher.dispatch(EventType.CLICK_TOGGLE_BUTTON);
         });
     }
 

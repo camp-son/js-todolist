@@ -1,12 +1,11 @@
 import EventChannel from "../common/EventChannel.js";
 import { EventType } from "../constant/EventType.js";
 
-const initialDataUrl = `http://${location.hostname}:${location.port}/data/init.json`;
-
 export class TodoModel extends EventChannel {
-    constructor() {
+    constructor(url) {
         super();
         this.todos = [];
+        this.url = url;
     }
 
     get todoList() {
@@ -14,15 +13,21 @@ export class TodoModel extends EventChannel {
     }
 
     getInitialDataHandler() {
-        fetch(initialDataUrl).then(res => res.json()).then(todos => {
+        fetch(this.url).then(res => res.json()).then(todos => {
             for (const todo of todos) {
                 this.addTodo.call(this, todo);
             }
         });        
     }
 
+    saveInitData(data) {
+        this.todos = data;
+        this.publish(EventType.FETCH_INIT_DATA, this.todos);
+    }
+
     addTodo(todo) {
+        if (!todo) return ;
         this.todos = [...this.todos, todo];
-        this.publish(EventType.LISTENING_TODOS, this.todos);
+        this.publish(EventType.CHANGE_TODO_LIST, this.todos);
     }
 }

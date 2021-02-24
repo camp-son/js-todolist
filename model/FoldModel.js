@@ -13,6 +13,6 @@ export class FoldModel extends EventChannel {
 
     toggleFold() {
         this.isFold = !this.isFold;
-        this.publish(EventType.CHANGE_FOLD, this.isFold);
+        this.publish(EventType.CLICK_TOGGLE_BUTTON, this.isFold);
     }
 }

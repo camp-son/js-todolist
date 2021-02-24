@@ -1,24 +1,23 @@
 // import { TodoController } from "./controller/TodoController.js";
+import ActionDispatcher from "./common/ActionDispatcher.js";
+import { EventType } from "./constant/EventType.js";
 import { FoldModel } from "./model/FoldModel.js";
 import { TodoModel } from "./model/TodoModel.js";
 import { InputView } from "./view/InputView.js";
 import { ListFoldButtonView } from "./view/ListFoldButtonView.js";
 import { ListView } from "./view/ListView.js";
 
-// const initialDataUrl = `http://${location.hostname}:${location.port}/data/init.json`;
+const initialDataUrl = `http://${location.hostname}:${location.port}/data/init.json`;
 
-const todoModel = new TodoModel();
+const todoModel = new TodoModel(initialDataUrl);
 const foldModel = new FoldModel();
 
-const inputView = new InputView(todoModel);
-const listView = new ListView(todoModel, foldModel);
-const foldButtonView = new ListFoldButtonView(foldModel);
+const dispatcher = new ActionDispatcher({todoModel, foldModel});
 
-// const todoController = new TodoController(todoModel, foldModel, inputView, listView, foldButtonView);
-// todoController.getInitData(initialDataUrl);
+new InputView(dispatcher);
+new ListView(dispatcher, todoModel, foldModel);
+new ListFoldButtonView(dispatcher, foldModel);
 
-// fetch(initialDataUrl).then(res => res.json()).then(todos => {
-//     for (const todo of todos) {
-//         todoModel.addTodo.call(todoModel, todo);
-//     }
-// });
+document.addEventListener('DOMContentLoaded', () => {
+    dispatcher.dispatch(EventType.FETCH_INIT_DATA);
+});

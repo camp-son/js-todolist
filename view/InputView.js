@@ -1,10 +1,11 @@
+import { EventType } from "../constant/EventType.js";
+
 export class InputView {
-    constructor(todoModel) {
-        
+    constructor(dispatcher) {
+        this.dispatcher = dispatcher;
+
         this.regButton = document.querySelector('button[name=register]');
         this.inputElement = document.querySelector('input[name=todo]');
-        
-        this.todoModel = todoModel;
 
         this.initEvent();
     }
@@ -12,19 +13,16 @@ export class InputView {
     initEvent() {
         this.regButton.addEventListener('click', (e) => {
             const todoText = this.getTodoValue();
-            this.addTodoHandler(todoText);
+            this.dispatcher.dispatch(EventType.ADD_BUTTON, todoText);
+            this.render();
         });
 
         this.inputElement.addEventListener('keydown', (e) => {
             if (e.keyCode !== 13) return;
             const todoText = this.getTodoValue();
-            this.addTodoHandler(todoText);
+            this.dispatcher.dispatch(EventType.CHANGE_TODO_LIST, todoText);
+            this.render();
         });
-    }
-
-    addTodoHandler(todoString) {
-        this.todoModel.addTodo.call(this.todoModel, todoString);
-        this.render();
     }
 
     getTodoValue() {

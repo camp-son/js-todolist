@@ -1,7 +1,9 @@
-import { EventType } from "../constant/EventType";
+import { EventType } from "../constant/EventType.js";
 
 export class ListView {
-    constructor(todoModel, foldModel) {
+    constructor(dispatcher, todoModel, foldModel) {
+        this.dispatcher = dispatcher;
+
         this.listElement = document.querySelector('.todolist');
         this.todoList = null;
 
@@ -9,25 +11,18 @@ export class ListView {
         this.foldModel = foldModel;
 
         this.subscribe();
-        this.initEvents();
-    }
-
-    initEvents() {
-        document.addEventListener('DOMContentLoaded', () => {
-            this.getInitialDataHandler();
-        });
-    }
-
-    getInitialDataHandler() {
-        this.todoModel.getInitialDataHandler();
     }
 
     subscribe() {
-        this.todoModel.subscribe(EventType.LISTENING_TODOS, (todoList) => {
+        this.todoModel.subscribe(EventType.CHANGE_TODO_LIST, (todoList) => {
             this.render(todoList);
         });
 
-        this.foldModel.subscribe(EventType.CHANGE_FOLD, (isFold) => {
+        this.todoModel.subscribe(EventType.FETCH_INIT_DATA, (todoList) => {
+            this.render(todoList);
+        });
+
+        this.foldModel.subscribe(EventType.CLICK_TOGGLE_BUTTON, (isFold) => {
             this.toggle(isFold);
         });
     }
