@@ -10,6 +10,14 @@ export class TodoController {
         this.initService();
     }
 
+    getInitData(initialDataUrl) {
+        fetch(initialDataUrl).then(res => res.json()).then(data => {
+            for (let i = 0; i < data.length; i++) {
+                this.todoModel.addTodo.call(this.todoModel, data[i], this.afterAddTodo.bind(this));
+            }
+        });
+    }
+
     initService() {
         this.inputView.addTodoHandler = this.addTodoHandler.bind(this);
         this.foldButton.addFoldHandler = this.addFoldHandler.bind(this);

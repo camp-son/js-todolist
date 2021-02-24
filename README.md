@@ -15,3 +15,6 @@ npm run serve
 ## 1 Step
 - Model, View, Controller를 분리한다.
 - Model, View, Controller는 서로의 존재를 모르게 구현되어야 한다.
+- `Model` 데이터에 대한 관리
+- `View` DOM에 접근하고 렌더링 관리
+- `Controller` Model과 View를 연결시켜주는 중개자
