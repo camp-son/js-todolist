@@ -1,3 +1,5 @@
+import { EventType } from "../constant/EventType";
+
 export class ListFoldButtonView {
     constructor(foldModel) {
         this.foldButton = document.querySelector('.fold');
@@ -9,7 +11,7 @@ export class ListFoldButtonView {
     }
 
     subscribe() {
-        this.foldModel.subscribe((isFold) => {
+        this.foldModel.subscribe(EventType.CHANGE_FOLD, (isFold) => {
             this.render(isFold);
         });
     }

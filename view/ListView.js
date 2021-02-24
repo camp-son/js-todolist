@@ -1,3 +1,5 @@
+import { EventType } from "../constant/EventType";
+
 export class ListView {
     constructor(todoModel, foldModel) {
         this.listElement = document.querySelector('.todolist');
@@ -21,11 +23,11 @@ export class ListView {
     }
 
     subscribe() {
-        this.todoModel.subscribe((todoList) => {
+        this.todoModel.subscribe(EventType.LISTENING_TODOS, (todoList) => {
             this.render(todoList);
         });
 
-        this.foldModel.subscribe((isFold) => {
+        this.foldModel.subscribe(EventType.CHANGE_FOLD, (isFold) => {
             this.toggle(isFold);
         });
     }

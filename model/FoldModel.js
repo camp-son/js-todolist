@@ -1,6 +1,7 @@
-import Observable from "../common/Observable.js";
+import EventChannel from "../common/EventChannel.js";
+import { EventType } from "../constant/EventType.js";
 
-export class FoldModel extends Observable {
+export class FoldModel extends EventChannel {
     constructor() {
         super();
         this.isFold = false;
@@ -12,6 +13,6 @@ export class FoldModel extends Observable {
 
     toggleFold() {
         this.isFold = !this.isFold;
-        this.notify(this.isFold);
+        this.publish(EventType.CHANGE_FOLD, this.isFold);
     }
 }

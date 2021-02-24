@@ -1,8 +1,9 @@
-import Observable from "../common/Observable.js";
+import EventChannel from "../common/EventChannel.js";
+import { EventType } from "../constant/EventType.js";
 
 const initialDataUrl = `http://${location.hostname}:${location.port}/data/init.json`;
 
-export class TodoModel extends Observable {
+export class TodoModel extends EventChannel {
     constructor() {
         super();
         this.todos = [];
@@ -22,6 +23,6 @@ export class TodoModel extends Observable {
 
     addTodo(todo) {
         this.todos = [...this.todos, todo];
-        this.notify(this.todos);
+        this.publish(EventType.LISTENING_TODOS, this.todos);
     }
 }
