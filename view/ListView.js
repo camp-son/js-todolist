@@ -7,6 +7,17 @@ export class ListView {
         this.foldModel = foldModel;
 
         this.subscribe();
+        this.initEvents();
+    }
+
+    initEvents() {
+        document.addEventListener('DOMContentLoaded', () => {
+            this.getInitialDataHandler();
+        });
+    }
+
+    getInitialDataHandler() {
+        this.todoModel.getInitialDataHandler();
     }
 
     subscribe() {
