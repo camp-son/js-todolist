@@ -10,9 +10,15 @@ const initialDataUrl = `http://${location.hostname}:${location.port}/data/init.j
 const todoModel = new TodoModel();
 const foldModel = new FoldModel();
 
-const inputView = new InputView();
-const listView = new ListView();
-const foldButtonView = new ListFoldButtonView();
+const inputView = new InputView(todoModel);
+const listView = new ListView(todoModel, foldModel);
+const foldButtonView = new ListFoldButtonView(foldModel);
 
-const todoController = new TodoController(todoModel, foldModel, inputView, listView, foldButtonView);
-todoController.getInitData(initialDataUrl);
+// const todoController = new TodoController(todoModel, foldModel, inputView, listView, foldButtonView);
+// todoController.getInitData(initialDataUrl);
+
+fetch(initialDataUrl).then(res => res.json()).then(todos => {
+    for (const todo of todos) {
+        todoModel.addTodo.call(todoModel, todo);
+    }
+});

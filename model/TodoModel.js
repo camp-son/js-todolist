@@ -1,5 +1,8 @@
-export class TodoModel {
+import Observable from "../common/Observable.js";
+
+export class TodoModel extends Observable {
     constructor() {
+        super();
         this.todos = [];
     }
 
@@ -7,8 +10,8 @@ export class TodoModel {
         return this.todos;
     }
 
-    addTodo(todo, callback) {
+    addTodo(todo) {
         this.todos = [...this.todos, todo];
-        callback(this.todos);
+        this.notify(this.todos);
     }
 }

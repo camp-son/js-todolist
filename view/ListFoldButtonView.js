@@ -1,14 +1,22 @@
 export class ListFoldButtonView {
-    constructor() {
+    constructor(foldModel) {
         this.foldButton = document.querySelector('.fold');
-        this.addFoldHandler = null;
+
+        this.foldModel = foldModel;
 
         this.initEvents();
+        this.subscribe();
+    }
+
+    subscribe() {
+        this.foldModel.subscribe((isFold) => {
+            this.render(isFold);
+        });
     }
 
     initEvents() {
         this.foldButton.addEventListener('click', () => {
-            this.addFoldHandler();
+            this.foldModel.toggleFold.call(this.foldModel);
         });
     }
 

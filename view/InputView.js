@@ -1,8 +1,10 @@
 export class InputView {
-    constructor() {
+    constructor(todoModel) {
+        
         this.regButton = document.querySelector('button[name=register]');
         this.inputElement = document.querySelector('input[name=todo]');
-        this.addTodoHandler = null;
+        
+        this.todoModel = todoModel;
 
         this.initEvent();
     }
@@ -18,6 +20,11 @@ export class InputView {
             const todoText = this.getTodoValue();
             this.addTodoHandler(todoText);
         });
+    }
+
+    addTodoHandler(todoString) {
+        this.todoModel.addTodo.call(this.todoModel, todoString);
+        this.render();
     }
 
     getTodoValue() {

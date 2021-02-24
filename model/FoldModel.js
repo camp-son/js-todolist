@@ -1,5 +1,8 @@
-export class FoldModel {
+import Observable from "../common/Observable.js";
+
+export class FoldModel extends Observable {
     constructor() {
+        super();
         this.isFold = false;
     }
 
@@ -7,8 +10,8 @@ export class FoldModel {
         return this.isFold;
     }
 
-    toggleFold(callback) {
+    toggleFold() {
         this.isFold = !this.isFold;
-        callback(this.isFold);
+        this.notify(this.isFold);
     }
 }

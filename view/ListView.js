@@ -1,7 +1,22 @@
 export class ListView {
-    constructor() {
+    constructor(todoModel, foldModel) {
         this.listElement = document.querySelector('.todolist');
         this.todoList = null;
+
+        this.todoModel = todoModel;
+        this.foldModel = foldModel;
+
+        this.subscribe();
+    }
+
+    subscribe() {
+        this.todoModel.subscribe((todoList) => {
+            this.render(todoList);
+        });
+
+        this.foldModel.subscribe((isFold) => {
+            this.toggle(isFold);
+        });
     }
 
     render(todoList) {
