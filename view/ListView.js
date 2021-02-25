@@ -28,10 +28,18 @@ export class ListView {
     }
 
     render(todoList) {
-        const listHTML = todoList.reduce((html, todo) => `${html} <li> ${todo} <span class="deleteX"> X </span> </li>`, '');
+        const listHTML = todoList
+            .filter(({status}) => status === 'todo')
+            .reduce((html, todo) => `${html} <li id="${todo.id}"> ${todo.title} <span class="deleteX"> X </span> </li>`, '');
 
         this.todoList = todoList;
         this.listElement.innerHTML = listHTML;
+
+        this.listElement.querySelectorAll('.deleteX').forEach((elem) => {
+            elem.addEventListener('click', () => {
+                this.dispatcher.dispatch(EventType.DELETE_BUTTON, elem.parentElement.getAttribute('id'));
+            });
+        });
     }
 
     toggle(isFold) {

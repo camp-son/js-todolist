@@ -12,7 +12,10 @@ export default class ActionDispatcher {
         switch(eventType) {
             case EventType.ADD_BUTTON:
             case EventType.CHANGE_TODO_LIST:
-                this.todoModel.addTodo(data);
+                this.todoModel.addTodo({title: data});
+                break;
+            case EventType.DELETE_BUTTON:
+                this.todoModel.doneTodo(data);
                 break;
             case EventType.FETCH_INIT_DATA:
                 this.todoModel.getInitialDataHandler();
